@@ -5,7 +5,7 @@ import './Styles.scss';
 const Button = (props) => {
 
   return (
-    <div className={"submitButton"} onClick={props.handleSubmit} >
+    <div className={props.loaderView? "ui loading button" : "submitButton"} onClick={props.handleSubmit} >
       {props.label}
     </div>
   )

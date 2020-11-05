@@ -8,6 +8,7 @@ import './Styles.scss';
 const LearningModule = ({setGameStatus}) => {
   const [currentQuestionId, setCurrentQuestionId] = React.useState(0);
   const [quizData, setQuizData] = React.useState({});
+  const [loaderView, setLoaderView] = React.useState(false);
   let currentQuestion = quizData.questionArr ? quizData.questionArr[currentQuestionId]: {};
   React.useEffect(()=>{
     getQuizData();
@@ -26,7 +27,11 @@ const LearningModule = ({setGameStatus}) => {
 
   const handleSubmit=()=> {
     if(currentQuestionId < quizData.totalQuestions-1){
-      setCurrentQuestionId(currentQuestionId+1);
+      setLoaderView(true)
+      setTimeout(function(){
+        setCurrentQuestionId(currentQuestionId+1);
+        setLoaderView(false)
+      }, 500)
     } else {
       setCurrentQuestionId(0);
       setGameStatus({message: "Great Job! Play again.", loadIntro: true});
@@ -59,7 +64,7 @@ const LearningModule = ({setGameStatus}) => {
               { possibleAnswers }
             </div>
             <div className="learningModule--submitButtonContainer">
-              <Button label="Submit" handleSubmit={ handleSubmit } />
+              <Button label="Submit" handleSubmit={ handleSubmit } loaderView={loaderView}/>
             </div>
           </div>
         </>
